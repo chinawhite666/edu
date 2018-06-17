@@ -216,8 +216,9 @@
 			result = JSON.parse(result);
 			for( var c=0;c<10;c++){
 				if(result[c]){
+					var aa=result[c].id+"-"+result[c].yes+"分数:"+result[c].content;
 					app.newsList.push({
-							title: result[c].id,
+							title: aa,
 						
 						})
 
