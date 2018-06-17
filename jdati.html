@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>java课程考核</title>
+<link rel="stylesheet" type="text/css" href="css/xcConfirm.css"/>
+<script type="text/javascript" src="./dist/nebulas.js"></script>
+
+<script type="text/javascript" src="./dist/nebPay.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+<style type="text/css">
+.demo{width:760px; margin:60px auto 10px auto}
+</style>
+
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/quiz.js"></script>
+<script type="text/javascript">
+    var dappContactAddress = "n1zFnbTi7b3kQFQ8BQb7DanHePPeXH6N9Lk";
+    var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+    var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+    var serialNumber;
+    
+	  var from = dappContactAddress
+        var value = "0";
+        var nonce = "0"
+        var gas_price = "1000000"
+        var gas_limit = "2000000"
+     
+	$(function(){
+		
+	
+    
+        $("#btn").click(function(){
+                        var txt=  "姓名应与所使用的钱包地址相对应，否则成绩失效";
+            
+                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+                            onOk:function(v){
+                                var yes;
+                   if(score>=80)    {
+
+                       yes="java考核通过";
+                   } else{
+
+                     yes="java考核未通过";
+                   }    
+                  var to = dappContactAddress;
+                  var callFunction = "save";
+                  var value = "0";
+                  var callArgs = "[\"" +v+ "\",\""+score+"\",\""+yes+"\"]";
+                  serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+                    listener: function (resp) {
+                        console.log("thecallback is " + resp)
+                        if(typeof resp == "string"){
+                        console.log("reject! cancel");
+                         alert("已取消上传")
+                   
+                        }else{
+                          var a= document.getElementById("list");
+                           var b = document.createElement("blockquote");
+                          b.innerHTML=v;
+                          a.appendChild(b);
+                          alert("上传成功");
+                    
+                    
+                }
+                    }
+                });
+    
+    
+                
+                  
+                                console.log(v);
+                            }
+                        });
+                    });
+    
+        });
+var init={'questions':[{'question':'在java中语句：37.2％10的运算结果为','answers':['7.2','7','3','0.2'],'correctAnswer':1},{'question':'下列不可作为java语言修饰符的是？','answers':['a1','$1','_1','11'],'correctAnswer':4},{'question':'在创建对象时必须?','answers':['先声明对象，然后才能使用对象','先声明对象，为对象分配内存空间，然后才能使用对象','先声明对象，为对象分配内存空间，对对象初始化，然后才能使用对象','上述说法都对'],'correctAnswer':3},{'question':'在调用方法时，若要使方法改变实参的值，可以?','answers':['用基本数据类型作为参数 ','用对象作为参数 ','A和B都对','A和B都不对'],'correctAnswer':3},{'question':'月亮距离地球多远？','answers':['18万公里','38万公里','100万公里','180万公里'],'correctAnswer':2}]};
+
+$(function(){
+	$('#quiz-container').jquizzy({
+        questions: init.questions
+    });
+});
+</script>
+</head>
+
+<body>
+    <center><h1>java课程考核</h1></center>
+    <hr>
+
+<div class="demo">
+	<div id='quiz-container'></div>
+</div>
+
+<div style="text-align:center;">
+<button id="btn" class="nav-next">提交成绩（未完成提交按未通过处理）</button>
+</div>
+
+<script src="js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

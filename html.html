@@ -21,21 +21,67 @@
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
     <script src="vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./dist/nebulas.js"></script>
+
+		<script type="text/javascript" src="./dist/nebPay.js"></script>
     
 
     <!-- Custom styles for this template -->
     <link href="css/freelancer.min.css" rel="stylesheet">
     <script>
-    function open1(ob)
-      {
-        var id=$(ob).attr("id");
-        alert(id);
-      }
+
+      var dappContactAddress = "n1zFnbTi7b3kQFQ8BQb7DanHePPeXH6N9Lk";
+    	var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    	neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"))
+
+
+    	var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    	var nebPay = new NebPay();
+			var serialNumber;
+			var from = dappContactAddress;
+			var to = dappContactAddress;
+			var value = "0";
+      var nonce = "0"
+      var gas_price = "1000000";
+			var gas_limit = "2000000";
+
+
     
     function  aaa(ob){
 
-      var id=$(ob).attr("id");
-      alert(id);
+      var id="html:"+$(ob).html();
+      var to = dappContactAddress;
+						var value = "0";
+						var nonce = "0"
+						var gas_price = "1000000";
+						var gas_limit = "2000000";
+						var number=0;
+						var callFunction = "study";
+						var callArgs = "[\""+id+"\"]";
+						serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+							listener: function (resp) {
+								console.log("thecallback is " + resp)
+								if(typeof resp == "string"){
+								console.log("reject! cancel");
+								alert("已取消上传,本次学习将不被记录")
+							
+								}else{
+									
+									alert("上传成功！");
+								}
+							}
+						});
+
+
+        
+      
+
+
+
+
+
+
+
     }
     
     </script>
@@ -66,25 +112,25 @@
     <!-- Header -->
     <header class="masthead bg-primary text-white text-center">
       <div class="container">
-        <img class="img-fluid mb-5 d-block mx-auto" src="img/java.png" alt="">
+        <img class="img-fluid mb-5 d-block mx-auto" src="img/html.jpg" alt="">
         <h1 class="text-uppercase mb-0">开始学习吧</h1>
         <hr class="star-light">
+        <p>您学习的轨迹讲会被记录上链</p>
        
         <ul class="list-group" style="color: #000;">
            
           
-          <li class="list-group-item"><a href="./java/1.pdf"  id="aaa" onclick="aaa(this)" target="_blank">第一章</a></li>
-          <li class="list-group-item"><a href="./java/2.pdf">第二章</a></li>
-          <li class="list-group-item"><a href="./java/3.pdf">第三章</a></li>
-          <li class="list-group-item"><a href="./java/4.pdf">第四章</a></li>
-          <li class="list-group-item"><a href="./java/5.pdf">第五章</a></li>
-          <li class="list-group-item"><a href="./java/6.pdf">第六章</a></li>
-          <li class="list-group-item"><a href="./java/7.pdf">第七章</a></li>
-          <li class="list-group-item"><a href="./java/8.pdf">第八章</a></li>
-          <li class="list-group-item"><a href="./java/9.pdf">第九章</a></li>
-          <li class="list-group-item"><a href="./java/10.pdf">第十章</a></li>
+          <li class="list-group-item"><a href="./html/1.pdf"   onclick="aaa(this)" target="_blank">第一章：认知概念</a></li>
+          <li class="list-group-item"><a href="./html/2.pdf"  onclick="aaa(this)" target="_blank">第二章：基本元素</a></li>
+          <li class="list-group-item"><a href="./html/3.pdf"  onclick="aaa(this)" target="_blank">第三章：表和框架</a></li>
+          <li class="list-group-item"><a href="./html/4.pdf"  onclick="aaa(this)" target="_blank">第四章：用户交互</a></li>
+          <li class="list-group-item"><a href="./html/5.pdf"  onclick="aaa(this)" target="_blank">第五章：动态网页</a></li>
+          <li class="list-group-item"><a href="./html/6.pdf"  onclick="aaa(this)" target="_blank">第六章：canvas</a></li>
+          <li class="list-group-item"><a href="./html/7.pdf"  onclick="aaa(this)" target="_blank">第七章：视觉效果</a></li>
+          <li class="list-group-item"><a href="./html/8.pdf"  onclick="aaa(this)" target="_blank">第八章：离线支持</a></li>
+          
           <hr>
-          <li class="list-group-item"><a href="./jdati.html">课程考核-认证上链</a></li>
+          <li class="list-group-item"><a href="./hdati.html">课程考核-认证上链</a></li>
 
          
         </ul>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Freelancer - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/form-elements.css">
+<link rel="stylesheet" href="assets/css/style.css">
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+    <script  src="js/alert.js"></script>
+    <script type="text/javascript" src="./dist/nebulas.js"></script>
+
+		<script type="text/javascript" src="./dist/nebPay.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="dist/spop.min.js"></script>
+		<link href="dist/spop.min.css" rel="stylesheet"/>
+    <style type="text/css">
+			#table table {
+				width: 100%;
+				font-size: 14px;
+				border: 1px solid #eee
+			}
+			
+			#table {
+				padding: 0 10px;
+			}
+			
+			table thead th {
+				background: #f5f5f5;
+				padding: 10px;
+				text-align: left;
+			}
+			
+			table tbody td {
+				padding: 10px;
+				text-align: left;
+				border-bottom: 1px solid #eee;
+				border-right: 1px solid #eee;
+			}
+			
+			table tbody td span {
+				margin: 0 10px;
+				cursor: pointer;
+			}
+			
+			.delete {
+				color: red;
+			}
+			
+			.edit {
+				color: #008cd5;
+			}
+			
+			.add {
+				border: 1px solid #eee;
+				margin: 10px 0;
+				padding: 15px;
+			}
+			
+			input {
+				border: 1px solid #ccc;
+				padding: 5px;
+				border-radius: 3px;
+				margin-right: 15px;
+			}
+			
+			button {
+				background: #008cd5;
+				border: 0;
+				padding: 4px 15px;
+				border-radius: 3px;
+				color: #fff;
+			}
+			
+			#mask {
+				background: rgba(0, 0, 0, .5);
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				z-index: 4;
+				top: 0;
+				left: 0;
+			}
+			
+			.mask {
+				width: 300px;
+				height: 250px;
+				background: rgba(255, 255, 255, 1);
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				z-index: 47;
+				border-radius: 5px;
+			}
+			
+			.title {
+				padding: 10px;
+				border-bottom: 1px solid #eee;
+			}
+			
+			.title span {
+				float: right;
+				cursor: pointer;
+			}
+			
+			.content {
+				padding: 10px;
+			}
+			
+			.content input {
+				width: 270px;
+				margin-bottom: 15px;
+			}
+    </style>
+
+    <script>
+      String.prototype.Trim = function(){   
+			return this.replace(/(^\s*)|(\s*$)/g, "");   
+			}   
+			String.prototype.LTrim = function(){   
+			return this.replace(/(^\s*)/g, "");   
+			}   
+			String.prototype.RTrim = function() {   
+			return this.replace(/(\s*$)/g, "");   
+			} 
+   
+
+      var dappContactAddress = "n1zFnbTi7b3kQFQ8BQb7DanHePPeXH6N9Lk";
+    	var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    	neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"))
+      var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    	var nebPay = new NebPay();
+			var serialNumber;
+			var from = dappContactAddress;
+			var to = dappContactAddress;
+			var value = "0";
+      var nonce = "0"
+      var gas_price = "1000000";
+			var gas_limit = "2000000";
+
+    	function pat(){
+			for(var z=0;z<20;z++){
+				
+				app.newsList.splice(0, 1);//调试 跟踪参数//清除
+			}
+			
+			
+			
+			var b =document.getElementById("inputid");
+			var getid=b.value.LTrim();//空格要小心
+			
+			if(getid){
+				var  ppp =function() {
+					spop('学员'+b.value+'已登陆', 'success');
+					}
+					
+				ppp();
+				b.value="";	
+
+				showLoading({
+				title:"正在加载",
+				mask:true,
+				success:function (res) {
+					console.warn(JSON.stringify(res))
+				}
+				});
+				setTimeout(function(){
+					hideLoading()
+				},4000);
+
+				}
+				else{
+					showToast({
+					title:"输入不能为空",
+					icon:'loading',
+					duration:1000,
+					mask:true,
+					success:function (res) {
+						console.warn(JSON.stringify(res))
+					}
+					});
+					}
+			var callFunction = "getall";
+			var callArgs = "[\""+getid+"\"]";
+
+			var contract = {
+            "function": callFunction,
+            "args": callArgs
+			}
+			
+			neb.api.call(from, dappContactAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+            var result = resp.result;
+            
+			result = JSON.parse(result);
+			for( var c=0;c<10;c++){
+				if(result[c]){
+					app.newsList.push({
+							title: result[c].id,
+						
+						})
+
+				}
+
+
+			}
+
+			}).catch(function (err) {console.log("error :" + err.message);}) 
+
+
+
+
+
+
+		}	
+		function doc(){
+			for(var z=0;z<20;z++){
+				
+				app.newsList.splice(0, 1);//调试 跟踪参数
+			}
+	
+
+			
+
+
+			
+			var b =document.getElementById("inputid");
+			
+			var getid=b.value.LTrim();
+			
+			if(getid){
+				var  ddd =function() {
+					spop('学员'+b.value+'已登陆', 'success');
+					}
+					
+				ddd();
+				b.value="";	
+			showLoading({
+            title:"正在加载",
+            mask:true,
+            success:function (res) {
+                console.warn(JSON.stringify(res))
+            }
+			});
+			setTimeout(function(){
+				hideLoading()
+			},4000);
+
+			}
+			else{
+				showToast({
+				title:"输入不能为空",
+				icon:'loading',
+				duration:1000,
+				mask:true,
+				success:function (res) {
+					console.warn(JSON.stringify(res))
+				}
+				});
+				}
+			var callFunction = "getsall";
+			var callArgs = "[\"" +getid+"\"]";
+			var contract = {
+            "function": callFunction,
+            "args": callArgs
+			}
+			
+			neb.api.call(from, dappContactAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+            var result = resp.result;
+            
+			result = JSON.parse(result);
+			for( var c=0;c<10;c++){
+				if(result[c]){
+					app.newsList.push({
+							title: result[c].id,
+					
+						})
+
+				}
+
+
+			}
+
+			}).catch(function (err) {console.log("error :" + err.message);}) 
+		
+
+
+		}
+		
+    
+    
+    </script>
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Nebulas Education(星云-教育链)</a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="./index.html">返回主页</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead bg-primary text-white text-center">
+      <div class="container">
+        <img class="img-fluid mb-5 d-block mx-auto" src="img/profile.png" alt="">
+        <input type="text" id="inputid" name="title" value="" placeholder="学员id（id即为nas钱包地址）" style="width: 300px;"/>
+        <a class="btn btn-link-1 launch-modal" href="#" onclick="doc()" >学习轨迹</a>
+        <a class="btn btn-link-1 launch-modal" href="#" onclick="pat()">能力认证</a>
+        <hr class="star-light">
+        <div id="table" style="color: #000;">
+         
+          <table cellpadding="0" cellspacing="0">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>学习内容</th>
+                
+                
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item,index) in newsList">
+                <td width="5%">{{index+1}}</td>
+                <td>{{item.title}}</td>
+                
+                
+                
+              </tr>
+            </tbody>
+          </table>
+          <div id="mask" v-if="editlist">
+            <div class="mask">
+              <div class="title">
+                编辑
+                <span @click="editlist=false">
+                  X
+                </span>
+              </div>
+              <div class="content">
+                <input type="text" v-model="editDetail.title" name="title" value="" placeholder="标题" />
+                <input type="text" v-model="editDetail.user" name="user" value="" placeholder="发布人" />
+                <input type="date" v-model="editDetail.dates" name="date" value="" placeholder="发布时间" />
+                <button @click="update">更新</button>
+                <button @click="editlist=false">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+         
+      </div>
+    </header>
+    <script>
+      var app = new Vue({
+        el: '#table',
+        data: {
+          addDetail: {},
+          editlist: false,
+          editDetail: {},
+          newsList: [],
+          editid:''
+        },
+        mounted() {
+
+        },
+        methods: {
+
+          //新增
+          adddetail() {
+            //这里的思路应该是把this.addDetail传给服务端，然后加载列表this.newsList
+            //this.newsList.push(this.addDetail)
+            this.newsList.push({
+              title: this.addDetail.title,
+             
+            })
+
+            //axios.post('url',this.addDetail).then((res) =>{
+            //若返回正确结果，清空新增输入框的数据
+            //this.addDetail.title = ""
+            //this.addDetail.user = ""
+            //this.addDetail.dates = ""
+            //})
+
+          },
+          //删除
+          deletelist(id, i) {
+            this.newsList.splice(i, 1);
+            //这边可以传id给服务端进行删除  ID = id
+            //axios.get('url',{ID:id}).then((res) =>{
+            //			加载列表				
+            //})
+            console.log(id+","+i);
+          },
+          //编辑
+          edit(item) {
+            console.log(item)
+            this.editDetail = {
+              title: item.title,
+              user: item.user,
+              dates: item.dates,
+              id: item.id
+            }
+            this.editlist = true
+            this.editid = item.id
+            
+          },
+          //确认更新
+          update() {
+            //编辑的话，也是传id去服务端
+            //axios.get('url',{ID:id}).then((res) =>{
+            //			加载列表				
+            //})
+            let _this= this
+            for(let i = 0; i < _this.newsList.length; i++) {
+              if(_this.newsList[i].id ==this.editid) {
+                _this.newsList[i] = {
+                  title: _this.editDetail.title,
+                  user: _this.editDetail.user,
+                  dates: _this.editDetail.dates,
+                  id: this.editid
+                }
+                this.editlist = false
+              }
+            }
+          }
+        }
+      })
+    </script>
+
+    
+   
+
+   
+
+   
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/freelancer.min.js"></script>
+
+  </body>
+
+</html>

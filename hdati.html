@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>html课程考核</title>
+<link rel="stylesheet" type="text/css" href="css/xcConfirm.css"/>
+<script type="text/javascript" src="./dist/nebulas.js"></script>
+
+<script type="text/javascript" src="./dist/nebPay.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+<style type="text/css">
+.demo{width:760px; margin:60px auto 10px auto}
+</style>
+
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/quiz1.js"></script>
+<script type="text/javascript">
+    var dappContactAddress = "n1zFnbTi7b3kQFQ8BQb7DanHePPeXH6N9Lk";
+    var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+    var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+    var serialNumber;
+    
+	  var from = dappContactAddress
+        var value = "0";
+        var nonce = "0"
+        var gas_price = "1000000"
+        var gas_limit = "2000000"
+     
+	$(function(){
+		
+	
+    
+        $("#btn").click(function(){
+                        var txt=  "姓名应与所使用的钱包地址相对应，否则成绩失效";
+            
+                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+                            onOk:function(v){
+                                var yes;
+                   if(score>=80)    {
+
+                       yes="html考核通过";
+                   } else{
+
+                     yes="html考核未通过";
+                   }    
+                  var to = dappContactAddress;
+                  var callFunction = "save";
+                  var value = "0";
+                  var callArgs = "[\"" +v+ "\",\""+score+"\",\""+yes+"\"]";
+                  serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+                    listener: function (resp) {
+                        console.log("thecallback is " + resp)
+                        if(typeof resp == "string"){
+                        console.log("reject! cancel");
+                         alert("已取消上传")
+                   
+                        }else{
+                          var a= document.getElementById("list");
+                           var b = document.createElement("blockquote");
+                          b.innerHTML=v;
+                          a.appendChild(b);
+                          alert("上传成功");
+                    
+                    
+                }
+                    }
+                });
+    
+    
+                
+                  
+                                console.log(v);
+                            }
+                        });
+                    });
+    
+        });
+var init={'questions':[{'question':'在 HTML5 中，哪个属性用于规定输入字段是必填的？','answers':['required','formvalidate','validate','placeholder'],'correctAnswer':1},{'question':'哪个 HTML5 内建对象用于在画布上绘制？','answers':['getContent','getContext','getGraphics','getCanvas'],'correctAnswer':1},{'question':'在html中，样式表按照应用方式可以分为三种类型，其中不包括?','answers':['内嵌样式表','行内样式表','外部样式表文件','类样式表 '],'correctAnswer':4},{'question':'在制作HTML页面时，页面的布局技术主要分为?','answers':['框架布局','表格布局','DIV层布局','以上全部选项 '],'correctAnswer':4},{'question':'<HR size= "5" color="#0000FF" width="50%">','answers':[' size是指水平线的长度','size是指水平线的宽度 ','width是指水平线的宽度','width是指水平线的高度'],'correctAnswer':2}]};
+
+$(function(){
+	$('#quiz-container').jquizzy({
+        questions: init.questions
+    });
+});
+</script>
+</head>
+
+<body>
+    <center><h1>html课程考核</h1></center>
+    <hr>
+
+<div class="demo">
+	<div id='quiz-container'></div>
+</div>
+
+<div style="text-align:center;">
+<button id="btn" class="nav-next">提交成绩（未完成提交按未通过处理）</button>
+</div>
+
+<script src="js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>
