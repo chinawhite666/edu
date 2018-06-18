@@ -229,9 +229,12 @@
 
 				}
 
+				
+
 
 			}
 
+	
 			}).catch(function (err) {console.log("error :" + err.message);}) 
 
 
@@ -296,6 +299,7 @@
             var result = resp.result;
             
 			result = JSON.parse(result);
+		
 			for( var c=0;c<10;c++){
 				if(result[c]){
 					app.newsList.push({
@@ -307,8 +311,13 @@
 
 
 			}
+			
+		
 
-			}).catch(function (err) {console.log("error :" + err.message);}) 
+			}).catch(function (err) {console.log("error :" + err.message);}) ;
+
+
+	
 		
 
 
@@ -347,7 +356,8 @@
         <input type="text" id="inputid" name="title" value="" placeholder="学员id（id即为nas钱包地址）" style="width: 300px;"/>
         <a class="btn btn-link-1 launch-modal" href="#" onclick="doc()" >学习轨迹</a>
         <a class="btn btn-link-1 launch-modal" href="#" onclick="pat()">能力认证</a>
-        <hr class="star-light">
+				<hr class="star-light">
+				<p>若无响应，可能由于主网繁忙，请再试一次</p>
         <div id="table" style="color: #000;">
          
           <table cellpadding="0" cellspacing="0">
