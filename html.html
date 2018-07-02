@@ -48,8 +48,16 @@
 
     
     function  aaa(ob){
-
-      var id="已学习html:"+$(ob).html();
+      var today=new Date();
+      var yy= today.getFullYear();
+      var mmm =today.getMonth();
+      var  dd  =today.getDate();
+	    var hh=today.getHours();
+	    var mm=today.getMinutes();
+	    var sw=today.getSeconds();// 在小于10的数字前加一个‘0’
+	  
+	    var tt=yy+"-"+mmm+"-"+dd+" "+hh+":"+mm+":"+sw+" ";
+      var id=tt+"学习html:"+$(ob).html();
       var to = dappContactAddress;
 						var value = "0";
 						var nonce = "0"
